@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Услуги программирования на Python</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+   <header>
+       <h1>Услуги программирования на Python</h1>
+       <nav>
+           <ul>
+               <li><a href="#services">Наши услуги</a></li>
+               <li><a href="#working-process">Как мы работаем</a></li>
+               <li><a href="#testimonials">Отзывы клиентов</a></li>
+               <li><a href="#faq">Часто задаваемые вопросы</a></li>
+               <li><a href="#contact">Контакты</a></li>
+           </ul>
+       </nav>
+   </header>
+
+   <section id="services">
+       <h2>Наши услуги</h2>
+       <div class="service-list">
+           {% for service in services %}
+               <div class="service-item">
+                   <h3><a href="{{ url_for('service_detail', service_id=service.id) }}" target="_blank">{{ service.name }}</a></h3>
+                   <p>{{ service.description }}</p>
+                   <p><strong>Цена: {{ service.price }}</strong></p>
+               </div>
+           {% endfor %}
+       </div>
+   </section>
+
+   <section id="working-process">
+       <h2>Как мы работаем</h2>
+
+       <!-- Используем список для описания процесса -->
+       <ol class="working-process-list">
+           {% for step in working_process %}
+               <li class="working-process-item">
+                   <strong>{{ step.step }}</strong>: {{ step.description }}
+               </li>
+           {% endfor %}
+       </ol>
+
+       <!-- Добавление визуальных элементов -->
+       <p>Мы стремимся к прозрачности на каждом этапе работы. Наш подход включает:</p>
+       <ul class="working-process-approach">
+           <li>Тесное сотрудничество с клиентами.</li>
+           <li>Регулярные обновления статуса проекта.</li>
+           <li>Гибкость в подходах к решению задач.</li>
+           <li>Поддержка после завершения проекта.</li>
+       </ul>
+
+   </section>
+
+   <section id="testimonials">
+       <h2>Отзывы клиентов</h2>
+       <div class="testimonial-list">
+           {% for testimonial in testimonials %}
+               <div class="testimonial-item">
+                   <p>"{{ testimonial.feedback }}"</p>
+                   <p>- {{ testimonial.client_name }}</p>
+               </div>
+           {% endfor %}
+       </div>
+   </section>
+
+   <section id="faq">
+       <h2>Часто задаваемые вопросы</h2>
+       <div class="faq-list">
+           {% for item in faq %}
+               <div class="faq-item">
+                   <strong>{{ item.question }}</strong>
+                   <p>{{ item.answer }}</p>
+               </div>
+           {% endfor %}
+       </div>
+   </section>
+
+   <section id="contact">
+       <h2>Контакты</h2>
+       <p>Свяжитесь с нами по электронной почте: info@example.com</p>
+       <p>Телефон: +380 956-058-232</p>
+   </section>
+
+   <!-- Чат для поддержки клиентов -->
+   <div id="chat" class="chat-box">
+       <div class="chat-header">
+           <h3>Чат поддержки</h3>
+           <!-- Кнопка сворачивания/разворачивания -->
+           <button id="toggle-chat" title="Свернуть/развернуть чат">-</button>
+       </div>
+       <div id="chat-messages" class="chat-messages"></div>
+       <input type="text" id="chat-input" placeholder="Введите ваше сообщение..." />
+       <button id="send-button">Отправить</button>
+   </div>
+
+   <!-- Информация, которая появится при прокрутке -->
+   <div id="scroll-info" class="scroll-info" style="display:none;">
+       У нас есть много интересных предложений!
+   </div>
+
+   <!-- Кнопка для возврата к верхней части страницы -->
+   <button onclick="scrollToTop()" id="scrollToTopBtn" title="Вернуться к началу">↑</button>
+
+   <footer>
+       <p>© 2024 Услуги программирования на Python. Все права защищены.</p>
+   </footer>
+
+<script>
+// Обработка отправки сообщения в чат
+$(document).ready(function() {
+    $('#send-button').click(function() {
+        var message = $('#chat-input').val();
+        if (message) {
+            $('#chat-messages').append('<div class="message"><strong>Вы:</strong> '+ message +'</div>');
+            $('#chat-input').val(''); // Очистить поле ввода
+
+            // Отправка сообщения на сервер
+            $.post('/chat', { message: message }, function(data) {
+                $('#chat-messages').append('<div class="message"><strong>Бот:</strong> '+ data.response +'</div>');
+            });
+        }
+    });
+
+    // Отправка сообщения по нажатию Enter
+    $('#chat-input').keypress(function(e) {
+        if (e.which == 13) { // Код клавиши Enter
+            $('#send-button').click();
+            return false; // Предотвратить переход на новую строку
+        }
+    });
+
+    // Логика для сворачивания/разворачивания чата
+    $('#toggle-chat').click(function() {
+        $('#chat-messages').toggle(); // Скрыть или показать сообщения
+        $(this).text($(this).text() === '-' ? '+' : '-'); // Изменение текста кнопки
+    });
+
+    // Показ информации при прокрутке
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) { // Если прокрутка больше 100 пикселей
+            $('#scroll-info').fadeIn(); // Показать информацию
+        } else {
+            $('#scroll-info').fadeOut(); // Скрыть информацию
+        }
+    });
+});
+
+// Функция для возврата к началу страницы
+function scrollToTop() {
+    window.scrollTo({top: 0, behavior: 'smooth'}); // Плавный скролл вверх
+}
+</script>
+
+<style>
+
+/* Стили для чата */
+.chat-box {
+    position: fixed; /* Фиксированное положение */
+    bottom: 20px; /* Отступ от нижней грани */
+    right: 20px; /* Отступ от правой грани */
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.message {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+#chat-input {
+    width: calc(100% - 60px);
+}
+
+#send-button {
+    width: 50px;
+}
+
+/* Стили для процесса работы */
+.working-process-list {
+    list-style-type: decimal; /* Нумерованный список */
+}
+
+.working-process-item {
+    margin-bottom: 15px; /* Отступ между пунктами */
+}
+
+/* Стили для информации при прокрутке */
+.scroll-info {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+}
+
+/* Кнопка возврата к началу */
+#scrollToTopBtn {
+    display: none; /* Скрыть кнопку по умолчанию */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+
+#scrollToTopBtn:hover {
+    background-color:#5a31a2; /* Более темный цвет при наведении на кнопку */
+}
+</style>
+
+</body>
+</html>

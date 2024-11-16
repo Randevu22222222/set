@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>{{ service.name }} | Услуги программирования на Python</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<header>
+   <h1>{{ service.name }}</h1>
+   <nav>
+       <ul>
+           <li><a href="/">Главная</a></li>
+           <li><a href="#contact">Контакты</a></li>
+       </ul>
+   </nav>
+</header>
+
+<section id="service-details">
+   <h2>Описание услуги</h2>
+   <p>{{ service.description }}</p>
+
+   <h3>Цена: {{ service.price }}</h3>
+
+   <h3>Что входит в услугу:</h3>
+   <ul>
+       {% for detail in service.details %}
+           <li>{{ detail }}</li>
+       {% endfor %}
+   </ul>
+
+   <!-- Кнопка возврата -->
+   <a href="/">Вернуться к услугам</a>
+
+</section>
+
+<footer>
+   <p>© 2024 Услуги программирования на Python. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

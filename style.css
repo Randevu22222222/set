@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9; /* Светлый фон */
+}
+
+header {
+    background-color: #6f42c1; /* Фиолетовый фон */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+}
+
+.service-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.service-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 15px;
+    width: calc(45% - 20px); /* Две колонки */
+    transition: transform 0.3s; /* Плавный эффект при наведении */
+}
+
+.service-item:hover {
+    transform: translateY(-5px); /* Эффект при наведении */
+}
+
+.testimonial-list {
+    margin-top: 30px;
+}
+
+.testimonial-item {
+    background-color: #e9ecef; /* Светло-серый фон */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.faq-item {
+    background-color: #e9ecef; /* Светло-серый фон */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h1, h2 {
+    color: #6f42c1; /* Фиолетовый цвет заголовков */
+}
+
+/* Стили для процесса работы */
+.working-process-list {
+    list-style-type: decimal; /* Нумерованный список */
+}
+
+.working-process-item {
+    margin-bottom: 15px; /* Отступ между пунктами */
+}
+
+/* Стили для чата */
+.chat-box {
+   position: fixed; /* Фиксированное положение */
+   bottom: 20px; /* Отступ от нижней грани */
+   right: 20px; /* Отступ от правой грани */
+   width: 300px;
+   background-color: #fff;
+   border-radius: 8px;
+   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+   padding: 15px;
+   z-index: 1000; /* Чтобы чат был на переднем плане */
+}
+
+.chat-messages {
+   max-height: 200px;
+   overflow-y: auto;
+   margin-bottom: 10px; /* Отступ снизу для ввода сообщения */
+}
+
+.message {
+   background-color: #e9ecef;
+   border-radius: 5px;
+   padding: 10px;
+   margin-bottom: 5px;
+}
+
+/* Поле ввода и кнопка отправки */
+#chat-input {
+   width: calc(100% - 60px);
+   padding: 5px; /* Отступ внутри поля ввода */
+   border-radius: 5px; /* Закругленные углы */
+   border: 1px solid #ccc; /* Цвет рамки */
+}
+
+#send-button {
+   width: 50px;
+   padding: 5px; /* Отступ внутри кнопки */
+   background-color: #6f42c1; /* Цвет фона кнопки */
+   color: white; /* Цвет текста кнопки */
+   border-radius: 5px; /* Закругленные углы кнопки */
+   border: none; /* Убираем рамку у кнопки */
+   cursor:pointer; /* Курсор при наведении на кнопку */
+}
+
+/* Эффект при наведении на кнопку отправки */
+#send-button:hover {
+   background-color:#5a31a2; /* Более темный цвет при наведении на кнопку */
+}
